@@ -1,9 +1,31 @@
+export default function Home() {
+    return (
+        <main>
+            <p className="text-3xl">Home page</p>
+        </main>
+    )
+}
+/*
+"use client"
+
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import React, {useEffect, useState} from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [names, setNames] = useState<string[]>()
+
+  useEffect(() => {
+    setNames(["Mahalini", "Aziz"])
+  }, [])
+
+  const onPushClicked = () => {
+    console.log("trigger")
+    setNames(data => [...data, "Utif Milkedori"])
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -40,6 +62,14 @@ export default function Home() {
           height={37}
           priority
         />
+      </div>
+
+      <div>
+        <ul>
+          {names?.map(name =>
+            <li>{name}</li>
+          )}
+        </ul>
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
@@ -111,6 +141,8 @@ export default function Home() {
           </p>
         </a>
       </div>
+      <button className="p-8" onClick={onPushClicked}>push</button>
     </main>
   )
 }
+*/

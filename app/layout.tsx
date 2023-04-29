@@ -1,5 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Link from "next/link";
+import StateProvider from "./Provider";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +17,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+            <section className="space-x-2">
+                <Link href="/">Home</Link>
+                <Link href="/posts">Posts</Link>
+                <Link href="/blog">Blog</Link>
+                <Link href="/articles">Articles</Link>
+                <hr/>
+            </section>
+            <br/>
+            <StateProvider>{children}</StateProvider>
+        </body>
     </html>
   )
 }
