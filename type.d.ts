@@ -1,8 +1,8 @@
 interface ISchema {}
 
 interface ICallApiAction {
+    method: "post" | "get" | "put" | "patch" | "delete",
     endpoint: string,
-    schema: ISchema,
     types: [string, string, string]
 }
 interface IAppAction {

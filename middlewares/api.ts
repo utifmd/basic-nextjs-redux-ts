@@ -3,30 +3,29 @@ import {AnyAction} from "redux";
 
 export const CALL_API = "CALL_API"
 
-const httpRequest = (params: ISchema) =>
+const httpRequest = (method: string, endpoint: string, schema: ISchema) =>
     new Promise<ISchema>((resolve => {
-        setTimeout(() => {
-            resolve(params)
-        }, 1500)
-    }))
-const middlewareApi = () => (next: any) => (action: IAppAction | AnyAction) => {
+    setTimeout(() => {
+        resolve(schema)
+    }, 1500)
+}))
+const middlewareApi = () => (next: any) => (action: IAppAction) => {
     const callApi = action[CALL_API]
-    if (typeof callApi === "undefined")
-        return next(action)
+    if (typeof callApi === "undefined") return next(action)
+    if ("method" !in callApi) throw Error("Invalid call api type")
 
-    const {types} = callApi
+    const {method, endpoint, types} = callApi
     const [requestType, failedType, successType] = types
     const payload = action["payload"]
-    if (typeof payload === "undefined")
-        throw Error("Action payload does not perform.")
+    if (typeof payload === "undefined") throw Error("Action payload does not perform.")
 
-    const actionWith = (data: AnyAction) => {
-        const mAction = Object.assign({}, action, data)
-        delete mAction[CALL_API]
-        return mAction
+    const actionWith = (mAction: AnyAction & {payload?: any}) => {
+        const output = Object.assign({}, action, mAction) // can add lodash for simplicity
+        delete output[CALL_API]
+        return output
     }
-    actionWith({type: requestType})
-    return httpRequest(payload).then(
+    next(actionWith({type: requestType}))
+    return httpRequest(method, endpoint, payload).then(
         response => next(actionWith({type: successType, payload: response})),
         error => next(actionWith({type: failedType, payload: error}))
     )

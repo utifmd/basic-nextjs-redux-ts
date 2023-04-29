@@ -26,7 +26,12 @@ export default function Articles({state, addArticle}: Props) {
     return (
         <div>
             <span className="text-3xl">Article page</span>
-            <button className="px-5 mx-5 hover:bg-gray-100 hover:text-gray-600" onClick={onSavePressed}>Save id {nextId}</button>
+            <button
+                className="px-5 mx-5 hover:bg-gray-100 hover:text-gray-600"
+                disabled={state.status === "loading"}
+                onClick={onSavePressed}>Save with id {nextId}
+            </button>
+            <span>{state.status}</span>
             <ul>{state.value.map(article =>
                 <li key={article.id}>{article.title} | {article.content}</li>
             )}</ul>
