@@ -1,4 +1,4 @@
-interface IArticle {
+interface IArticle extends ISchema {
     id: number,
     title: string,
     content: string
